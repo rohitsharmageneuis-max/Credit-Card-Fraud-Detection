@@ -1,11 +1,14 @@
 # 🛡️ AI Credit Card Fraud Detection System
 ### End-to-End Deep Learning (ANN) & Interactive Fintech Dashboard
 
-[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-red.svg)](https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/)
-[![Plotly](https://img.shields.io/badge/Plotly-Interactive-blueviolet.svg)](https://plotly.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rohitsharmageneuis-max/Credit-Card-Fraud-Detection/blob/main/notebooks/analysis.ipynb)
+
+---
+
+### 🚀 Quick Access Links
+- 🌐 **Live Streamlit Web App:** [https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/](https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/)
+- 📓 **Google Colab Notebook:** [Open in Google Colab](https://colab.research.google.com/github/rohitsharmageneuis-max/Credit-Card-Fraud-Detection/blob/main/notebooks/analysis.ipynb)
 
 ---
 
