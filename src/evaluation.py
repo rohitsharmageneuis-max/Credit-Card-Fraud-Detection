@@ -27,20 +27,20 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 
-# Color palette for Dark Fintech Theme
+# High-Contrast Vivid Palette for Dark Fintech Theme
 PALETTE = {
-    "bg_paper": "#111827",
-    "bg_plot": "#0b0f19",
-    "text": "#f8fafc",
-    "text_muted": "#94a3b8",
-    "grid": "rgba(148, 163, 184, 0.12)",
-    "cyan": "#06b6d4",
-    "cyan_light": "#22d3ee",
-    "purple": "#8b5cf6",
-    "purple_light": "#a855f7",
-    "red": "#ef4444",
-    "green": "#10b981",
-    "gold": "#f59e0b"
+    "bg_paper": "#0f172a",       # Slate 900
+    "bg_plot": "#020617",        # Slate 950 deep contrast
+    "text": "#ffffff",           # Crisp pure white
+    "text_muted": "#cbd5e1",     # Slate 300 high legibility
+    "grid": "rgba(203, 213, 225, 0.22)", # Crisp grid lines
+    "cyan": "#00f0ff",           # Electric Cyan / Aqua
+    "cyan_light": "#67e8f9",     # Light Cyan
+    "purple": "#b388ff",         # Vivid Neon Violet / Purple
+    "purple_light": "#c084fc",   # Lavender
+    "red": "#ff3366",            # High-visibility Neon Coral Red (Fraud)
+    "green": "#00e676",          # High-visibility Emerald Spring Green (Genuine)
+    "gold": "#ffb300"            # Vivid Amber Gold
 }
 
 
@@ -161,20 +161,21 @@ def plot_confusion_matrix(cm: list) -> go.Figure:
         y=labels,
         text=text_annot,
         texttemplate="%{text}",
-        textfont={"size": 15, "color": "#ffffff", "family": "Plus Jakarta Sans"},
+        textfont={"size": 16, "color": "#ffffff", "family": "Plus Jakarta Sans, sans-serif"},
         colorscale=[
-            [0.0, "#0f172a"],
-            [0.5, "#4338ca"],
-            [1.0, "#06b6d4"]
+            [0.0, "#090d16"],
+            [0.2, "#1e1b4b"],
+            [0.6, "#4f46e5"],
+            [1.0, "#00f0ff"]
         ],
-        colorbar=dict(title=dict(text="Count", font=dict(color=PALETTE["text"])), tickfont=dict(color=PALETTE["text"])),
+        colorbar=dict(title=dict(text="Count", font=dict(color="#ffffff", size=13)), tickfont=dict(color="#ffffff", size=12)),
         showscale=True
     ))
 
     fig.update_layout(
-        title=dict(text="<b>Confusion Matrix</b>", font=dict(color=PALETTE["text"], size=16)),
-        xaxis=dict(title=dict(text="Predicted Class", font=dict(color=PALETTE["text_muted"])), tickfont=dict(color=PALETTE["text"])),
-        yaxis=dict(title=dict(text="Actual Class", font=dict(color=PALETTE["text_muted"])), tickfont=dict(color=PALETTE["text"]), autorange="reversed"),
+        title=dict(text="<b>Confusion Matrix</b>", font=dict(color="#ffffff", size=17)),
+        xaxis=dict(title=dict(text="Predicted Class", font=dict(color="#e2e8f0", size=14)), tickfont=dict(color="#ffffff", size=13)),
+        yaxis=dict(title=dict(text="Actual Class", font=dict(color="#e2e8f0", size=14)), tickfont=dict(color="#ffffff", size=13), autorange="reversed"),
         paper_bgcolor=PALETTE["bg_paper"],
         plot_bgcolor=PALETTE["bg_plot"],
         margin=dict(l=40, r=40, t=50, b=40),
@@ -185,7 +186,7 @@ def plot_confusion_matrix(cm: list) -> go.Figure:
 
 def plot_roc_curve(fpr: list, tpr: list, roc_auc: float) -> go.Figure:
     """
-    Creates an interactive ROC curve chart.
+    Creates an interactive ROC curve chart with high visibility.
     """
     fig = go.Figure()
 
@@ -193,27 +194,27 @@ def plot_roc_curve(fpr: list, tpr: list, roc_auc: float) -> go.Figure:
     fig.add_trace(go.Scatter(
         x=fpr, y=tpr,
         mode="lines",
-        name=f"ANN ROC (AUC = {roc_auc:.4f})",
-        line=dict(color=PALETTE["cyan"], width=3),
+        name=f"ANN Model (AUC = {roc_auc:.4f})",
+        line=dict(color="#00f0ff", width=3.5),
         fill="tozeroy",
-        fillcolor="rgba(6, 182, 212, 0.12)"
+        fillcolor="rgba(0, 240, 255, 0.18)"
     ))
 
     # Diagonal Random Chance
     fig.add_trace(go.Scatter(
         x=[0, 1], y=[0, 1],
         mode="lines",
-        name="Random Classifier (AUC = 0.50)",
-        line=dict(color=PALETTE["text_muted"], width=2, dash="dash")
+        name="Random Guess Baseline (AUC = 0.50)",
+        line=dict(color="#fbbf24", width=2.5, dash="dash")
     ))
 
     fig.update_layout(
-        title=dict(text=f"<b>Receiver Operating Characteristic (ROC)</b> — AUC: {roc_auc:.4f}", font=dict(color=PALETTE["text"], size=16)),
-        xaxis=dict(title="False Positive Rate (1 - Specificity)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"], range=[0, 1]),
-        yaxis=dict(title="True Positive Rate (Recall)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"], range=[0, 1.02]),
+        title=dict(text=f"<b>Receiver Operating Characteristic (ROC)</b> — AUC: {roc_auc:.4f}", font=dict(color="#ffffff", size=17)),
+        xaxis=dict(title="False Positive Rate (1 - Specificity)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff", size=12), range=[0, 1]),
+        yaxis=dict(title="True Positive Rate (Recall)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff", size=12), range=[0, 1.02]),
         paper_bgcolor=PALETTE["bg_paper"],
         plot_bgcolor=PALETTE["bg_plot"],
-        legend=dict(font=dict(color=PALETTE["text"]), bgcolor="rgba(17, 24, 39, 0.7)"),
+        legend=dict(font=dict(color="#ffffff", size=12), bgcolor="rgba(15, 23, 42, 0.85)", bordercolor="rgba(255,255,255,0.2)", borderwidth=1),
         margin=dict(l=40, r=40, t=50, b=40),
         height=380
     )
@@ -222,26 +223,26 @@ def plot_roc_curve(fpr: list, tpr: list, roc_auc: float) -> go.Figure:
 
 def plot_precision_recall_curve(recall_curve: list, precision_curve: list, pr_auc: float) -> go.Figure:
     """
-    Creates an interactive Precision-Recall curve chart (crucial for imbalanced fraud datasets).
+    Creates an interactive Precision-Recall curve chart with vibrant high contrast.
     """
     fig = go.Figure()
 
     fig.add_trace(go.Scatter(
         x=recall_curve, y=precision_curve,
         mode="lines",
-        name=f"ANN PR (PR-AUC = {pr_auc:.4f})",
-        line=dict(color=PALETTE["purple"], width=3),
+        name=f"ANN PR Curve (PR-AUC = {pr_auc:.4f})",
+        line=dict(color="#c084fc", width=3.5),
         fill="tozeroy",
-        fillcolor="rgba(139, 92, 246, 0.12)"
+        fillcolor="rgba(192, 132, 252, 0.22)"
     ))
 
     fig.update_layout(
-        title=dict(text=f"<b>Precision-Recall Curve</b> — PR-AUC: {pr_auc:.4f}", font=dict(color=PALETTE["text"], size=16)),
-        xaxis=dict(title="Recall (Sensitivity)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"], range=[0, 1.02]),
-        yaxis=dict(title="Precision", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"], range=[0, 1.02]),
+        title=dict(text=f"<b>Precision-Recall Curve</b> — PR-AUC: {pr_auc:.4f}", font=dict(color="#ffffff", size=17)),
+        xaxis=dict(title="Recall (Sensitivity)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff", size=12), range=[0, 1.02]),
+        yaxis=dict(title="Precision", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff", size=12), range=[0, 1.02]),
         paper_bgcolor=PALETTE["bg_paper"],
         plot_bgcolor=PALETTE["bg_plot"],
-        legend=dict(font=dict(color=PALETTE["text"]), bgcolor="rgba(17, 24, 39, 0.7)"),
+        legend=dict(font=dict(color="#ffffff", size=12), bgcolor="rgba(15, 23, 42, 0.85)", bordercolor="rgba(255,255,255,0.2)", borderwidth=1),
         margin=dict(l=40, r=40, t=50, b=40),
         height=380
     )
@@ -263,22 +264,24 @@ def plot_training_history(history: Dict[str, list]) -> Tuple[go.Figure, go.Figur
             x=epochs, y=history["loss"],
             mode="lines+markers",
             name="Train Loss",
-            line=dict(color=PALETTE["cyan"], width=2)
+            line=dict(color="#00f0ff", width=2.5),
+            marker=dict(size=6, color="#00f0ff")
         ))
     if "val_loss" in history:
         fig_loss.add_trace(go.Scatter(
             x=epochs, y=history["val_loss"],
             mode="lines+markers",
-            name="Val Loss",
-            line=dict(color=PALETTE["purple"], width=2, dash="dash")
+            name="Validation Loss",
+            line=dict(color="#f43f5e", width=2.5, dash="dash"),
+            marker=dict(size=6, color="#f43f5e")
         ))
     fig_loss.update_layout(
-        title=dict(text="<b>Training & Validation Loss</b>", font=dict(color=PALETTE["text"], size=15)),
-        xaxis=dict(title="Epoch", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"]),
-        yaxis=dict(title="Loss (Binary Crossentropy)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"]),
+        title=dict(text="<b>Training & Validation Loss</b>", font=dict(color="#ffffff", size=16)),
+        xaxis=dict(title="Epoch", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
+        yaxis=dict(title="Binary Crossentropy Loss", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
         paper_bgcolor=PALETTE["bg_paper"],
         plot_bgcolor=PALETTE["bg_plot"],
-        legend=dict(font=dict(color=PALETTE["text"]), bgcolor="rgba(17, 24, 39, 0.7)"),
+        legend=dict(font=dict(color="#ffffff"), bgcolor="rgba(15, 23, 42, 0.85)", bordercolor="rgba(255,255,255,0.2)", borderwidth=1),
         margin=dict(l=40, r=40, t=50, b=40),
         height=340
     )
@@ -293,37 +296,39 @@ def plot_training_history(history: Dict[str, list]) -> Tuple[go.Figure, go.Figur
             x=epochs, y=history[acc_key],
             mode="lines+markers",
             name="Train Accuracy",
-            line=dict(color=PALETTE["green"], width=2)
+            line=dict(color="#00e676", width=2.5),
+            marker=dict(size=6, color="#00e676")
         ))
     if val_acc_key and val_acc_key in history:
         fig_metric.add_trace(go.Scatter(
             x=epochs, y=history[val_acc_key],
             mode="lines+markers",
-            name="Val Accuracy",
-            line=dict(color=PALETTE["gold"], width=2, dash="dash")
+            name="Validation Accuracy",
+            line=dict(color="#38bdf8", width=2.5, dash="dash"),
+            marker=dict(size=6, color="#38bdf8")
         ))
     if "auc" in history:
         fig_metric.add_trace(go.Scatter(
             x=epochs, y=history["auc"],
             mode="lines",
             name="Train AUC",
-            line=dict(color=PALETTE["cyan_light"], width=1.5, dash="dot")
+            line=dict(color="#00f0ff", width=2, dash="dot")
         ))
     if "val_auc" in history:
         fig_metric.add_trace(go.Scatter(
             x=epochs, y=history["val_auc"],
             mode="lines",
             name="Val AUC",
-            line=dict(color=PALETTE["purple_light"], width=1.5, dash="dot")
+            line=dict(color="#c084fc", width=2, dash="dot")
         ))
 
     fig_metric.update_layout(
-        title=dict(text="<b>Training & Validation Accuracy / AUC</b>", font=dict(color=PALETTE["text"], size=15)),
-        xaxis=dict(title="Epoch", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"]),
-        yaxis=dict(title="Metric Score", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"]),
+        title=dict(text="<b>Training & Validation Accuracy / AUC</b>", font=dict(color="#ffffff", size=16)),
+        xaxis=dict(title="Epoch", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
+        yaxis=dict(title="Score", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
         paper_bgcolor=PALETTE["bg_paper"],
         plot_bgcolor=PALETTE["bg_plot"],
-        legend=dict(font=dict(color=PALETTE["text"]), bgcolor="rgba(17, 24, 39, 0.7)"),
+        legend=dict(font=dict(color="#ffffff"), bgcolor="rgba(15, 23, 42, 0.85)", bordercolor="rgba(255,255,255,0.2)", borderwidth=1),
         margin=dict(l=40, r=40, t=50, b=40),
         height=340
     )

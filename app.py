@@ -285,19 +285,22 @@ if menu == "1. Dashboard Overview":
             fig_pie = go.Figure(data=[go.Pie(
                 labels=["Genuine Transactions", "Fraudulent Transactions"],
                 values=[genuine_tx, fraud_tx],
-                hole=0.65,
-                marker=dict(colors=["#06b6d4", "#ef4444"], line=dict(color="#0a0e1a", width=2)),
+                hole=0.62,
+                marker=dict(
+                    colors=["#00e676", "#ff3366"],
+                    line=dict(color="#ffffff", width=2)
+                ),
                 textinfo="label+percent",
                 hoverinfo="value+percent",
-                textfont=dict(size=13, color="#ffffff")
+                textfont=dict(size=14, color="#ffffff", family="sans-serif")
             )])
             fig_pie.update_layout(
-                title=dict(text="<b>Class Distribution (Severe Imbalance)</b>", font=dict(color=PALETTE["text"], size=16)),
+                title=dict(text="<b>Class Distribution (Genuine vs Fraud)</b>", font=dict(color="#ffffff", size=17)),
                 paper_bgcolor=PALETTE["bg_paper"],
                 plot_bgcolor=PALETTE["bg_plot"],
-                legend=dict(orientation="h", y=-0.1, font=dict(color=PALETTE["text_muted"])),
-                margin=dict(l=20, r=20, t=50, b=30),
-                height=360
+                legend=dict(orientation="h", y=-0.12, font=dict(color="#ffffff", size=13)),
+                margin=dict(l=20, r=20, t=50, b=40),
+                height=370
             )
             st.plotly_chart(fig_pie, use_container_width=True)
 
@@ -309,28 +312,28 @@ if menu == "1. Dashboard Overview":
             fig_amt = go.Figure()
             fig_amt.add_trace(go.Histogram(
                 x=sampled_df[sampled_df["Class"] == 0]["Amount"],
-                name="Genuine",
-                marker_color="#06b6d4",
-                opacity=0.75,
+                name="Genuine Transactions",
+                marker_color="#00f0ff",
+                opacity=0.85,
                 nbinsx=60
             ))
             fig_amt.add_trace(go.Histogram(
                 x=df[df["Class"] == 1]["Amount"],
-                name="Fraudulent",
-                marker_color="#ef4444",
-                opacity=0.85,
+                name="Fraudulent Transactions",
+                marker_color="#ff3366",
+                opacity=0.95,
                 nbinsx=60
             ))
             fig_amt.update_layout(
-                title=dict(text="<b>Transaction Amount Distribution (Log Scale)</b>", font=dict(color=PALETTE["text"], size=16)),
-                xaxis=dict(title="Transaction Amount ($)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"], type="log"),
-                yaxis=dict(title="Frequency (Count)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"]),
+                title=dict(text="<b>Transaction Amount Distribution (Log Scale)</b>", font=dict(color="#ffffff", size=17)),
+                xaxis=dict(title="Transaction Amount ($)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff"), type="log"),
+                yaxis=dict(title="Frequency (Count)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
                 barmode="overlay",
                 paper_bgcolor=PALETTE["bg_paper"],
                 plot_bgcolor=PALETTE["bg_plot"],
-                legend=dict(font=dict(color=PALETTE["text"])),
+                legend=dict(font=dict(color="#ffffff", size=12), bgcolor="rgba(15, 23, 42, 0.85)", bordercolor="rgba(255,255,255,0.2)", borderwidth=1),
                 margin=dict(l=30, r=30, t=50, b=40),
-                height=360
+                height=370
             )
             st.plotly_chart(fig_amt, use_container_width=True)
 
@@ -348,15 +351,16 @@ if menu == "1. Dashboard Overview":
                 y=hourly_counts[0],
                 name="Genuine Transactions",
                 mode="lines+markers",
-                line=dict(color="#22d3ee", width=2)
+                line=dict(color="#00f0ff", width=2.5),
+                marker=dict(size=6, color="#00f0ff")
             ))
             fig_time.update_layout(
-                title=dict(text="<b>Transaction Trend Across 24h Cycle</b>", font=dict(color=PALETTE["text"], size=16)),
-                xaxis=dict(title="Hour of Day (Cycle)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"], dtick=2),
-                yaxis=dict(title="Transaction Volume", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"]),
+                title=dict(text="<b>Transaction Trend Across 24h Cycle</b>", font=dict(color="#ffffff", size=17)),
+                xaxis=dict(title="Hour of Day (Cycle)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff"), dtick=2),
+                yaxis=dict(title="Transaction Volume", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
                 paper_bgcolor=PALETTE["bg_paper"],
                 plot_bgcolor=PALETTE["bg_plot"],
-                legend=dict(font=dict(color=PALETTE["text"])),
+                legend=dict(font=dict(color="#ffffff", size=12), bgcolor="rgba(15, 23, 42, 0.85)", bordercolor="rgba(255,255,255,0.2)", borderwidth=1),
                 margin=dict(l=30, r=30, t=50, b=40),
                 height=350
             )
@@ -369,17 +373,18 @@ if menu == "1. Dashboard Overview":
                     go.Bar(
                         x=fraud_hourly.index,
                         y=fraud_hourly.values,
-                        marker_color="#ef4444",
-                        name="Fraudulent Events"
+                        marker_color="#ff3366",
+                        name="Fraudulent Events",
+                        marker_line=dict(color="#ffffff", width=1)
                     )
                 ])
                 fig_fraud_hour.update_layout(
-                    title=dict(text="<b>Fraud Occurrence by Hour of Day</b>", font=dict(color=PALETTE["text"], size=16)),
-                    xaxis=dict(title="Hour of Day (Cycle)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"], dtick=2),
-                    yaxis=dict(title="Fraud Count", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"]),
+                    title=dict(text="<b>Fraud Occurrence by Hour of Day</b>", font=dict(color="#ffffff", size=17)),
+                    xaxis=dict(title="Hour of Day (Cycle)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff"), dtick=2),
+                    yaxis=dict(title="Fraud Count", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
                     paper_bgcolor=PALETTE["bg_paper"],
                     plot_bgcolor=PALETTE["bg_plot"],
-                    legend=dict(font=dict(color=PALETTE["text"])),
+                    legend=dict(font=dict(color="#ffffff", size=12), bgcolor="rgba(15, 23, 42, 0.85)", bordercolor="rgba(255,255,255,0.2)", borderwidth=1),
                     margin=dict(l=30, r=30, t=50, b=40),
                     height=350
                 )
@@ -417,17 +422,17 @@ elif menu == "2. Transaction Analysis":
             top_positive = correlations.tail(6)
             top_corr = pd.concat([top_negative, top_positive])
 
-            colors = ["#ef4444" if val > 0 else "#06b6d4" for val in top_corr.values]
+            colors = ["#ff3366" if val > 0 else "#00f0ff" for val in top_corr.values]
             fig_corr = go.Figure(go.Bar(
                 x=top_corr.values,
                 y=top_corr.index,
                 orientation="h",
-                marker_color=colors
+                marker=dict(color=colors, line=dict(color="#ffffff", width=1))
             ))
             fig_corr.update_layout(
-                title=dict(text="<b>Key Correlated Features (Top Negative & Positive)</b>", font=dict(color=PALETTE["text"], size=16)),
-                xaxis=dict(title="Pearson Correlation with Class (Fraud)", color=PALETTE["text_muted"], gridcolor=PALETTE["grid"]),
-                yaxis=dict(color=PALETTE["text"]),
+                title=dict(text="<b>Key Correlated Features (Top Negative & Positive)</b>", font=dict(color="#ffffff", size=17)),
+                xaxis=dict(title="Pearson Correlation with Fraud Class", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
+                yaxis=dict(color="#ffffff", tickfont=dict(color="#ffffff", size=12)),
                 paper_bgcolor=PALETTE["bg_paper"],
                 plot_bgcolor=PALETTE["bg_plot"],
                 margin=dict(l=40, r=40, t=50, b=40),
@@ -453,14 +458,16 @@ elif menu == "2. Transaction Analysis":
                 x="Class",
                 y=feature_selected,
                 color="Class",
-                color_discrete_map={0: "#06b6d4", 1: "#ef4444"},
+                color_discrete_map={0: "#00e676", 1: "#ff3366"},
                 labels={"Class": "Transaction Type (0: Genuine, 1: Fraud)"},
                 title=f"Distribution of {feature_selected} Across Genuine vs Fraudulent Transactions"
             )
             fig_box.update_layout(
                 paper_bgcolor=PALETTE["bg_paper"],
                 plot_bgcolor=PALETTE["bg_plot"],
-                font=dict(color=PALETTE["text"]),
+                font=dict(color="#ffffff"),
+                xaxis=dict(color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
+                yaxis=dict(color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
                 height=420
             )
             st.plotly_chart(fig_box, use_container_width=True)
@@ -478,7 +485,7 @@ elif menu == "2. Transaction Analysis":
                 x="Time",
                 y="Amount",
                 color="Class",
-                color_discrete_map={0: "rgba(6, 182, 212, 0.4)", 1: "#ef4444"},
+                color_discrete_map={0: "#00f0ff", 1: "#ff3366"},
                 labels={"Class": "Class (0: Genuine, 1: Fraud)"},
                 title="Time vs Amount (Subsampled Genuine vs All Frauds)",
                 hover_data=["V14", "V12"]
@@ -486,9 +493,10 @@ elif menu == "2. Transaction Analysis":
             fig_scat.update_layout(
                 paper_bgcolor=PALETTE["bg_paper"],
                 plot_bgcolor=PALETTE["bg_plot"],
-                font=dict(color=PALETTE["text"]),
-                yaxis=dict(type="log", title="Amount in $ (Log Scale)", gridcolor=PALETTE["grid"]),
-                xaxis=dict(title="Time (Seconds from First Transaction)", gridcolor=PALETTE["grid"]),
+                font=dict(color="#ffffff"),
+                yaxis=dict(type="log", title="Amount in $ (Log Scale)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
+                xaxis=dict(title="Time (Seconds from First Transaction)", color="#ffffff", gridcolor="rgba(255,255,255,0.15)", tickfont=dict(color="#ffffff")),
+                legend=dict(font=dict(color="#ffffff"), bgcolor="rgba(15, 23, 42, 0.85)", bordercolor="rgba(255,255,255,0.2)", borderwidth=1),
                 height=450
             )
             st.plotly_chart(fig_scat, use_container_width=True)
