@@ -6,12 +6,6 @@
 
 ---
 
-### 🚀 Quick Access Links
-- 🌐 **Live Streamlit Web App:** [https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/](https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/)
-- 📓 **Google Colab Notebook:** [Open in Google Colab](https://colab.research.google.com/github/rohitsharmageneuis-max/Credit-Card-Fraud-Detection/blob/main/notebooks/analysis.ipynb)
-
----
-
 ## 📊 Model Performance & Visualizations
 
 The Artificial Neural Network was trained and rigorously evaluated on an **untouched 20% test partition (56,962 transactions)** with zero data leakage (scalers and SMOTE fitted strictly on training data).
