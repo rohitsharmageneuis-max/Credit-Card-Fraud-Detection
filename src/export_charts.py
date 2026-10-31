@@ -17,20 +17,37 @@ with open(os.path.join(models_dir, 'history.json'), 'r') as f:
 plt.style.use('dark_background')
 
 # 1. Confusion Matrix
-plt.figure(figsize=(6, 5), facecolor='#0d1117')
+fig, ax = plt.subplots(figsize=(6.5, 5.5), facecolor='#0b0f19')
+ax.set_facecolor('#0b0f19')
+
 cm = np.array(metrics['confusion_matrix'])
 acc = metrics['accuracy'] * 100
 f1 = metrics['f1_score'] * 100
 
-sns.heatmap(cm, annot=True, fmt='d', cmap='Purples', cbar=False,
+# High-contrast color mapping with log/distinct norm or custom colors so all 4 cells are clearly visible
+from matplotlib.colors import LogNorm
+sns.heatmap(cm, annot=False, cmap='Blues_r', cbar=False, ax=ax,
             xticklabels=['Legitimate (0)', 'Fraud (1)'],
             yticklabels=['Legitimate (0)', 'Fraud (1)'],
-            annot_kws={'size': 14, 'weight': 'bold', 'color': 'white'})
-plt.title(f"Confusion Matrix\nAccuracy: {acc:.2f}% | F1-Score: {f1:.2f}%", color='#00f2fe', fontsize=12, pad=12)
-plt.ylabel('Actual Class', color='white', fontsize=11)
-plt.xlabel('Predicted Class', color='white', fontsize=11)
+            norm=LogNorm(vmin=1, vmax=cm.max()))
+
+# Manually write each cell value in clear, readable color based on cell position
+for i in range(2):
+    for j in range(2):
+        val = cm[i, j]
+        # Top-left cell is dark blue background -> write white text.
+        # Other cells are light/white background -> write dark navy or bright cyan text.
+        text_color = '#ffffff' if (i == 0 and j == 0) else '#0b0f19'
+        ax.text(j + 0.5, i + 0.5, f"{val:,}",
+                ha='center', va='center',
+                fontsize=16, fontweight='bold', color=text_color)
+
+ax.set_title(f"Confusion Matrix Heatmap\nAccuracy: {acc:.2f}% | F1-Score: {f1:.2f}%", color='#00f0ff', fontsize=13, pad=12, fontweight='bold')
+ax.set_ylabel('Actual Class', color='#ffffff', fontsize=12, labelpad=8)
+ax.set_xlabel('Predicted Class', color='#ffffff', fontsize=12, labelpad=8)
+ax.tick_params(colors='#ffffff', labelsize=11)
 plt.tight_layout()
-plt.savefig(os.path.join(assets_dir, 'confusion_matrix.png'), dpi=200, facecolor='#0d1117')
+plt.savefig(os.path.join(assets_dir, 'confusion_matrix.png'), dpi=200, facecolor='#0b0f19')
 plt.close()
 
 # 2. ROC Curve
