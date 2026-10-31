@@ -9,6 +9,34 @@
 
 ---
 
+## 📊 Model Performance & Visualizations
+
+The Artificial Neural Network was trained and rigorously evaluated on an **untouched 20% test partition (56,962 transactions)** with zero data leakage (scalers and SMOTE fitted strictly on training data).
+
+### 📈 Evaluation Summary
+| Metric | Test Set Score | Description |
+| :--- | :--- | :--- |
+| **Accuracy** | **99.92%** | Overall correct classifications across all transactions |
+| **Precision** | **74.77%** | True fraud percentage among all flagged alerts (Low false alarms) |
+| **Recall (Sensitivity)** | **81.63%** | Caught 80 out of 98 real fraudulent transactions |
+| **F1-Score** | **78.05%** | Harmonic mean of Precision and Recall |
+| **ROC-AUC** | **96.89%** | Area under Receiver Operating Characteristic curve |
+| **PR-AUC** | **85.14%** | Area under Precision-Recall curve (Gold standard for imbalanced data) |
+
+---
+
+### 🖼️ Evaluation Visualizations
+
+| Confusion Matrix Heatmap | ROC Curve |
+| :---: | :---: |
+| ![Confusion Matrix](assets/confusion_matrix.png) | ![ROC Curve](assets/roc_curve.png) |
+
+| Precision-Recall Curve | Training & Validation Curves |
+| :---: | :---: |
+| ![Precision-Recall Curve](assets/pr_curve.png) | ![Training History](assets/training_history.png) |
+
+---
+
 ## 📌 1. Project Introduction
 The **AI Credit Card Fraud Detection System** is an end-to-end, production-grade Deep Learning project designed for academic defense, college portfolios, and real-world fintech deployment.
 
@@ -43,7 +71,7 @@ Major engineering hurdles in credit card fraud detection include:
 | **Deep Learning** | TensorFlow 2.x, Keras (Sequential API) |
 | **Resampling & ML** | Imbalanced-Learn (SMOTE), Scikit-Learn |
 | **Data Manipulation** | Pandas, NumPy, SciPy |
-| **Serialization** | Joblib, Native Keras (`.keras` / `.h5`) |
+| **Serialization** | Joblib, Native Keras (`.keras`) |
 | **User Interface** | Streamlit, Custom Modern Dark CSS |
 | **Visualization** | Plotly Graph Objects & Express, Matplotlib, Seaborn |
 
@@ -116,26 +144,14 @@ The Artificial Neural Network is structured as follows:
 
 ---
 
-## 📊 8. Model Evaluation
-The model is evaluated on the untouched 20% test partition:
-- **Accuracy:** ~99.9%
-- **Precision:** Measures the accuracy of positive fraud flags.
-- **Recall (Sensitivity):** Critical metric capturing the percentage of real frauds caught.
-- **F1-Score:** Harmonic mean of Precision and Recall.
-- **ROC-AUC & PR-AUC:** Area under Receiver Operating Characteristic and Precision-Recall curves.
-
-All test metrics, confusion matrix numbers, and training curves are saved directly to `models/metrics.json` and `models/history.json` and rendered interactively in the Streamlit UI.
-
----
-
-## 📁 9. Project Directory Structure
+## 📁 8. Project Directory Structure
 ```
 Credit-Card-Fraud-Detection/
 │
 ├── app.py                      # Premium Streamlit Dark Fintech Dashboard
 ├── train.py                    # End-to-end model training & evaluation pipeline
 ├── requirements.txt            # Python dependencies
-├── README.md                   # Complete academic documentation
+├── README.md                   # Complete academic documentation & figures
 ├── .gitignore                  # Git ignore rules
 │
 ├── data/                       # Dataset directory
@@ -154,18 +170,26 @@ Credit-Card-Fraud-Detection/
 │   ├── preprocessing.py        # Scaler, SMOTE, and dataset checks
 │   ├── model.py                # ANN topology and training loops
 │   ├── evaluation.py           # Metrics calculation & Plotly charts
-│   └── prediction.py           # Inference engine & explainability
+│   ├── prediction.py           # Inference engine & explainability
+│   └── export_charts.py        # Static figure export utility
 │
 ├── notebooks/                  # Interactive experimentation
 │   └── analysis.ipynb          # Jupyter research notebook
 │
-└── assets/                     # UI styling
-    └── style.css               # Dark navy fintech custom CSS
+├── tests/                      # Automated unit test suite
+│   └── test_pipeline.py        # 5-test integrity suite
+│
+└── assets/                     # UI styling and static figures
+    ├── style.css               # Dark navy fintech custom CSS
+    ├── confusion_matrix.png    # Authentic evaluation confusion matrix
+    ├── roc_curve.png           # Authentic ROC curve
+    ├── pr_curve.png            # Authentic Precision-Recall curve
+    └── training_history.png    # Authentic loss & accuracy history
 ```
 
 ---
 
-## 🚀 10. Installation & Setup Instructions
+## 🚀 9. Installation & Setup Instructions
 
 ### Step 1: Clone or Navigate to Project
 ```bash
@@ -199,9 +223,15 @@ pip install -r requirements.txt
 
 ---
 
-## 💻 11. How to Run the Project
+## 💻 10. How to Run the Project
 
-### Train the Deep Learning Model
+### 1. Run Automated Unit Tests
+Verify all preprocessing, model architecture, metrics, and inference pipelines:
+```bash
+python -m unittest tests/test_pipeline.py
+```
+
+### 2. Train the Deep Learning Model
 Run the automated end-to-end training pipeline:
 ```bash
 python train.py
@@ -211,7 +241,7 @@ python train.py
 python train.py --epochs 25 --batch_size 1024 --scaler robust --patience 6
 ```
 
-### Launch the Streamlit Fintech Dashboard
+### 3. Launch the Streamlit Fintech Dashboard
 Launch the web interface:
 ```bash
 streamlit run app.py
@@ -220,7 +250,7 @@ Open your browser at `http://localhost:8501`.
 
 ---
 
-## 🖥️ 12. Dashboard Pages Overview
+## 🖥️ 11. Dashboard Pages Overview
 1. **Dashboard Overview:** Real-time KPI counters (Total, Genuine, Fraud, Fraud %), class distribution donut chart, log-scaled amount histograms, and 24h temporal trends.
 2. **Transaction Analysis:** Deep exploratory analysis, Pearson correlation rankings with fraud, feature distribution boxplots, and multi-dimensional scatter manifolds.
 3. **Fraud Detection (Live Inference):**
@@ -234,5 +264,5 @@ Open your browser at `http://localhost:8501`.
 
 ---
 
-## 📜 13. License & Credits
+## 📜 12. License & Credits
 Developed as an open-source educational and research project for Credit Card Fraud Detection using Deep Artificial Neural Networks. Released under the **MIT License**.

@@ -72,7 +72,7 @@ class TestCreditCardFraudSystem(unittest.TestCase):
         """Tests ANN construction, compilation and forward pass."""
         model = build_fraud_ann(input_dim=30, learning_rate=0.001)
         self.assertIsNotNone(model)
-        self.assertEqual(len(model.layers), 7)  # Dense, BN, Drop, Dense, BN, Drop, Dense, Output
+        self.assertEqual(len(model.layers), 8)  # Dense, BN, Drop, Dense, BN, Drop, Dense, Output
 
         # Test forward pass with random batch of 5
         dummy_input = np.random.randn(5, 30).astype(np.float32)
