@@ -2,10 +2,17 @@
 ### End-to-End Deep Learning (ANN) & Interactive Fintech Dashboard
 
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
+[![Streamlit Cloud](https://img.shields.io/badge/Streamlit%20Cloud-Live%20Demo-FF4B4B?logo=streamlit&logoColor=white)](https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-red.svg)](https://streamlit.io/)
 [![Plotly](https://img.shields.io/badge/Plotly-Interactive-blueviolet.svg)](https://plotly.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+---
+
+### 🌐 Live Interactive Web Dashboard
+> **Live Streamlit App:** [https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/](https://credit-card-fraud-detection-rt55gluy8lajbezpga2nn7.streamlit.app/)
+
+Access the live deployed fraud detection dashboard with real-time inference, risk-tier scoring, and interactive Plotly analytics.
 
 ---
 
