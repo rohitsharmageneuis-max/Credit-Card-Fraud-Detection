@@ -31,13 +31,11 @@ wheels/
 
 # Large dataset files (keep small sample if any, ignore large raw files)
 data/creditcard.csv
+creditcard.csv
 data/*.zip
 
 # Saved models and checkpoints
-models/*.h5
-models/*.keras
-models/*.joblib
-!models/.gitkeep
+# (Allow fraud_model.keras and scaler.joblib to be tracked for Streamlit Cloud deployment)
 
 # Streamlit
 .streamlit/

@@ -60,10 +60,20 @@ if os.path.exists(css_path):
 # =====================================================================
 @st.cache_data(show_spinner=False)
 def get_dataset(data_path="data/creditcard.csv"):
-    """Loads dataset if available."""
-    full_path = os.path.join(ROOT_DIR, data_path)
-    if os.path.exists(full_path):
-        return pd.read_csv(full_path)
+    """
+    Loads dataset with fallback options:
+    1. Specified data_path (e.g. data/creditcard.csv)
+    2. Root-level creditcard.csv
+    3. Built-in bundled real sample: data/creditcard_sample.csv (ensures Streamlit Cloud always loads without manual upload)
+    """
+    candidate_paths = [
+        os.path.join(ROOT_DIR, data_path),
+        os.path.join(ROOT_DIR, "creditcard.csv"),
+        os.path.join(ROOT_DIR, "data", "creditcard_sample.csv")
+    ]
+    for p in candidate_paths:
+        if os.path.exists(p):
+            return pd.read_csv(p)
     return None
 
 
@@ -130,7 +140,11 @@ with st.sidebar:
     # System Status Indicator
     predictor = get_predictor()
     model_ready = predictor.is_ready()
-    data_loaded = os.path.exists(os.path.join(ROOT_DIR, "data", "creditcard.csv"))
+    data_loaded = (
+        os.path.exists(os.path.join(ROOT_DIR, "data", "creditcard.csv")) or
+        os.path.exists(os.path.join(ROOT_DIR, "creditcard.csv")) or
+        os.path.exists(os.path.join(ROOT_DIR, "data", "creditcard_sample.csv"))
+    )
 
     st.markdown("<p style='font-size: 0.78rem; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 6px;'>Pipeline Telemetry</p>", unsafe_allow_html=True)
 
